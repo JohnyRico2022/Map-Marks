@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mapFragment_to_pointsFragment"
             app:destination="@id/pointsFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_editPointFragment"
+            app:destination="@id/editPointFragment" />
     </fragment>
     <fragment
         android:id="@+id/pointsFragment"
@@ -21,6 +24,15 @@
         tools:layout="@layout/fragment_points" >
         <action
             android:id="@+id/action_pointsFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editPointFragment"
+        android:name="ru.nikita.mapmarks.ui.EditPointFragment"
+        android:label="fragment_edit_point"
+        tools:layout="@layout/fragment_edit_point" >
+        <action
+            android:id="@+id/action_editPointFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
     </fragment>
 </navigation>

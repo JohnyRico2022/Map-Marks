@@ -23,9 +23,6 @@ class PointsFragment : Fragment() {
 
 
 
-
-
-
         binding.backButton.setOnClickListener {
             findNavController().navigate(R.id.mapFragment)
         }
