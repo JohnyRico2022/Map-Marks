@@ -23,6 +23,7 @@ import com.yandex.mapkit.map.PlacemarkMapObject
 import com.yandex.runtime.image.ImageProvider
 import ru.nikita.mapmarks.R
 import ru.nikita.mapmarks.databinding.FragmentMapBinding
+import ru.nikita.mapmarks.utils.StringArg
 
 
 class MapFragment : Fragment(), CameraListener {
@@ -66,7 +67,12 @@ class MapFragment : Fragment(), CameraListener {
                     setText("new point")
                 }
 
-                findNavController().navigate(R.id.action_mapFragment_to_editPointFragment)
+                findNavController().navigate(
+                    R.id.action_mapFragment_to_editPointFragment,
+                    Bundle().apply {
+                        putString(LAT_KEY, lat.toString())
+                        putString(LONG_KEY, long.toString())
+                    })
             }
         }
         map.addInputListener(inputListener)
@@ -91,7 +97,7 @@ class MapFragment : Fragment(), CameraListener {
             drawable.intrinsicWidth,
             drawable.intrinsicHeight,
             Bitmap.Config.ARGB_8888
-        ) ?: return null
+        )
         val canvas = Canvas(bitmap)
         drawable.setBounds(0, 0, canvas.width, canvas.height)
         drawable.draw(canvas)
@@ -122,5 +128,10 @@ class MapFragment : Fragment(), CameraListener {
         finished: Boolean
     ) {
         zoomValue = cameraPosition.zoom
+    }
+
+    companion object {
+         const val LAT_KEY = "LAT_KEY"
+         const val LONG_KEY = "LONG_KEY"
     }
 }
