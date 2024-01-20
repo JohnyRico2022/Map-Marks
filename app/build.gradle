@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace 'ru.nikita.mapmarks'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "ru.nikita.mapmarks"
         minSdk 21
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -50,4 +50,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     implementation 'com.yandex.android:maps.mobile:4.4.0-full'
+//    implementation "androidx.fragment:fragment-ktx:1.6.2"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.7.6"
+    implementation "androidx.navigation:navigation-ui-ktx:2.7.6"
+    implementation "androidx.recyclerview:recyclerview:1.3.2"
 }
