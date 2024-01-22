@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
@@ -24,12 +25,14 @@ import com.yandex.runtime.image.ImageProvider
 import ru.nikita.mapmarks.R
 import ru.nikita.mapmarks.databinding.FragmentMapBinding
 import ru.nikita.mapmarks.utils.StringArg
+import ru.nikita.mapmarks.viewModel.MarksViewModel
 
 
 class MapFragment : Fragment(), CameraListener {
     lateinit var binding: FragmentMapBinding
+    val viewModel: MarksViewModel by viewModels()
     private val startLocation = Point(55.753188, 37.622428)    // стартовая точка
-    private var zoomValue = 11.0F                                          // величина приближения
+    private var zoomValue = 10.0F                                          // величина приближения
     private lateinit var mapObjectCollection: MapObjectCollection
     private lateinit var placemarkMapObject: PlacemarkMapObject
 
@@ -37,6 +40,7 @@ class MapFragment : Fragment(), CameraListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         binding = FragmentMapBinding.inflate(layoutInflater, container, false)
         binding.mapview.mapWindow.map.addCameraListener(this)
         val map = binding.mapview.mapWindow.map                                 // наша карта
@@ -45,11 +49,36 @@ class MapFragment : Fragment(), CameraListener {
         mapObjectCollection = binding.mapview.mapWindow.map.mapObjects
         placemarkMapObject = mapObjectCollection.addPlacemark()
 
+        //Начальное движенее камеры
+        binding.mapview.mapWindow.map.move(
+            CameraPosition(startLocation, zoomValue, 0.0F, 100.0F),
+            Animation(Animation.Type.SMOOTH, 2F),
+            null
+        )
+
+
+       /*
+        map.addCameraListener { _, cameraPosition, _, _ ->
+
+            binding.point.setOnLongClickListener {
+                val point = cameraPosition.target
+                findNavController().navigate(
+                    R.id.action_mapsFragment_to_fragmentNewPoint,
+                    Bundle().apply {
+                        latitude = point.latitude
+                        longitude = point.longitude
+                        idPoint = 0
+                    }
+                )
+                true
+            }
+        }*/
+
+
         val inputListener = object : InputListener {
             override fun onMapTap(map: Map, pin: Point) {
                 Toast.makeText(requireContext(), "Tap", Toast.LENGTH_SHORT).show()
             }
-
             override fun onMapLongTap(map: Map, point: Point) {
                 placemarkMapObject.geometry = point
                 Toast.makeText(
@@ -64,7 +93,7 @@ class MapFragment : Fragment(), CameraListener {
                 map.mapObjects.addPlacemark().apply {
                     geometry = Point(lat, long)
                     setIcon(imageProvider)
-                    setText("new point")
+
                 }
 
                 findNavController().navigate(
@@ -75,14 +104,8 @@ class MapFragment : Fragment(), CameraListener {
                     })
             }
         }
-        map.addInputListener(inputListener)
 
-        //Начальное движенее камеры
-        binding.mapview.mapWindow.map.move(
-            CameraPosition(startLocation, zoomValue, 0.0F, 100.0F),
-            Animation(Animation.Type.SMOOTH, 3F),
-            null
-        )
+        map.addInputListener(inputListener)
 
         binding.goToPointsFragment.setOnClickListener {
             findNavController().navigate(R.id.pointsFragment)

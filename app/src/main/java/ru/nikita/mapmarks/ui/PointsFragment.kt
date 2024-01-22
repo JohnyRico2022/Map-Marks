@@ -35,15 +35,21 @@ class PointsFragment : Fragment() {
             }
 
             override fun onRemove(marks: Marks) {
+                viewModel.removeById(marks.id)
                 Toast.makeText(context, "Удаление id: ${marks.id}", Toast.LENGTH_SHORT).show()
             }
         })
 
         binding.recyclerView.adapter = adapter
-
         viewModel.data.observe(viewLifecycleOwner) { marks ->
-            adapter.submitList(marks)
+            val newMarks = marks.size > adapter.currentList.size
+            adapter.submitList(marks){
+                if(newMarks){
+                    binding.recyclerView.smoothScrollToPosition(0)
+                }
+            }
         }
+
 
         binding.backButton.setOnClickListener {
             findNavController().navigate(R.id.mapFragment)

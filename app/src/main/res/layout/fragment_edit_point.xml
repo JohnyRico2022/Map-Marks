@@ -68,30 +68,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/latitude" />
 
-    <EditText
-        android:id="@+id/latitude_editText"
+    <TextView
+        android:id="@+id/latitude_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:background="@null"
-        android:hint="55.753188"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/latitude"
         app:layout_constraintTop_toBottomOf="@id/title_editText" />
 
-    <EditText
-        android:id="@+id/longitude_editText"
+    <TextView
+        android:id="@+id/longitude_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:background="@null"
-        android:hint="33.759988"
-        android:inputType="numberDecimal"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/latitude"
-        app:layout_constraintTop_toBottomOf="@id/latitude_editText" />
+        app:layout_constraintTop_toBottomOf="@id/latitude_value" />
 
     <View
         android:id="@+id/bottom_line"
@@ -101,7 +96,7 @@
         android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/longitude_editText" />
+        app:layout_constraintTop_toBottomOf="@id/longitude_value" />
 
     <Button
         android:id="@+id/save_button"
