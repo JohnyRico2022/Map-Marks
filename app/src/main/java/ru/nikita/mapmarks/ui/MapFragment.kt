@@ -24,7 +24,6 @@ import com.yandex.mapkit.map.PlacemarkMapObject
 import com.yandex.runtime.image.ImageProvider
 import ru.nikita.mapmarks.R
 import ru.nikita.mapmarks.databinding.FragmentMapBinding
-import ru.nikita.mapmarks.utils.StringArg
 import ru.nikita.mapmarks.viewModel.MarksViewModel
 
 
@@ -55,24 +54,6 @@ class MapFragment : Fragment(), CameraListener {
             Animation(Animation.Type.SMOOTH, 2F),
             null
         )
-
-
-       /*
-        map.addCameraListener { _, cameraPosition, _, _ ->
-
-            binding.point.setOnLongClickListener {
-                val point = cameraPosition.target
-                findNavController().navigate(
-                    R.id.action_mapsFragment_to_fragmentNewPoint,
-                    Bundle().apply {
-                        latitude = point.latitude
-                        longitude = point.longitude
-                        idPoint = 0
-                    }
-                )
-                true
-            }
-        }*/
 
 
         val inputListener = object : InputListener {
