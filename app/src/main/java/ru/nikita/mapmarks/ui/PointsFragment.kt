@@ -16,6 +16,10 @@ import ru.nikita.mapmarks.adapter.MarksAdapter
 import ru.nikita.mapmarks.adapter.OnInteractionListener
 import ru.nikita.mapmarks.databinding.FragmentPointsBinding
 import ru.nikita.mapmarks.dto.Marks
+import ru.nikita.mapmarks.ui.MapFragment.Companion.ID_KEY
+import ru.nikita.mapmarks.ui.MapFragment.Companion.LAT_KEY
+import ru.nikita.mapmarks.ui.MapFragment.Companion.LONG_KEY
+import ru.nikita.mapmarks.ui.MapFragment.Companion.TITLE_KEY
 import ru.nikita.mapmarks.viewModel.MarksViewModel
 
 
@@ -24,44 +28,53 @@ class PointsFragment : Fragment() {
     lateinit var binding: FragmentPointsBinding
 
 
-    override  fun onCreateView(
+    override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPointsBinding.inflate(layoutInflater, container, false)
-         val viewModel: MarksViewModel by viewModels()
+        val viewModel: MarksViewModel by viewModels()
 
-        val adapter = MarksAdapter(object : OnInteractionListener{
+        val adapter = MarksAdapter(object : OnInteractionListener {
 
             override fun onEdit(marks: Marks) {
-                Toast.makeText(context, "Добавление id: ${marks.id}", Toast.LENGTH_SHORT).show()
+
+                findNavController().navigate(R.id.editPointFragment,
+                    Bundle().apply {
+                        putString(LAT_KEY, marks.latitude.toString())
+                        putString(LONG_KEY, marks.longitude.toString())
+                        putString(TITLE_KEY, marks.title)
+   //                     putString(ID_KEY, marks.id.toString())
+                    })
+                Toast.makeText(context, "Редактирование id: ${marks.id}", Toast.LENGTH_SHORT).show()
             }
 
             override fun onRemove(marks: Marks) {
                 viewModel.removeById(marks.id)
                 Toast.makeText(context, "Удаление id: ${marks.id}", Toast.LENGTH_SHORT).show()
             }
+
+            override fun onItemClicked(marks: Marks) {
+
+                findNavController().navigate(R.id.mapFragment,
+                    Bundle().apply {
+                        putString(LAT_KEY, marks.latitude.toString())
+                        putString(LONG_KEY, marks.longitude.toString())
+                        putString(TITLE_KEY, marks.title)
+                    }
+                )
+                Toast.makeText(context, "Item with id: ${marks.id}", Toast.LENGTH_LONG).show()
+            }
         })
 
-        viewLifecycleOwner.lifecycle.coroutineScope.launch{
+        viewLifecycleOwner.lifecycle.coroutineScope.launch {
             binding.recyclerView.adapter = adapter
 
 
-            viewModel.places.collectLatest {plases ->
+            viewModel.places.collectLatest { plases ->
                 adapter.submitList(plases)
             }
         }
-
-
-        /*viewModel.data.observe(viewLifecycleOwner) { marks ->
-            val newMarks = marks.size > adapter.currentList.size
-            adapter.submitList(marks){
-                if(newMarks){
-                    binding.recyclerView.smoothScrollToPosition(0)
-                }
-            }
-        }*/
-
 
         binding.backButton.setOnClickListener {
             findNavController().navigate(R.id.mapFragment)
@@ -69,3 +82,5 @@ class PointsFragment : Fragment() {
         return binding.root
     }
 }
+
+//TODO редактирование заголовка метки

@@ -17,13 +17,13 @@ interface MarksDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
    suspend fun insert(marks: MarksEntity)
 
-   /* @Query("UPDATE MarksEntity SET title = :title WHERE id = :id")
-    fun changeTitleById(id: Long, title: String)*/
+    @Query("UPDATE MarksEntity SET title = :title WHERE id = :id")
+   suspend fun changeTitleById(id: Long, title: String)
 
-    /*fun save(marks: MarksEntity) =
-        if (marks.id == 0) insert(marks) else changeTitleById(marks.id, marks.title)*/
+    suspend fun save(marks: MarksEntity) =
+        if (marks.id == 0L) insert(marks) else changeTitleById(marks.id, marks.title)
 
     @Query("DELETE FROM MarksEntity WHERE id = :id")
-    fun removeById(id: Long)
+  suspend  fun removeById(id: Long)
 
 }

@@ -104,6 +104,17 @@ class MapFragment : Fragment(R.layout.fragment_map) {
             }
         }
 
+
+        // получение данных с DB
+        val latFromDB = arguments?.getString(LAT_KEY)
+        val longFromDB = arguments?.getString(LONG_KEY)
+        val titleFromDB = arguments?.getString(TITLE_KEY)
+
+        // вписывание данных в TextView
+        binding.mapLat.text = latFromDB
+        binding.mapLong.text = longFromDB
+        binding.mapTitle.text = titleFromDB
+
         binding.goToPointsFragment.setOnClickListener {
             findNavController().navigate(R.id.pointsFragment)
         }
@@ -151,5 +162,7 @@ class MapFragment : Fragment(R.layout.fragment_map) {
     companion object {
         const val LAT_KEY = "LAT_KEY"
         const val LONG_KEY = "LONG_KEY"
+        const val TITLE_KEY = "TITLE_KEY"
+        const val ID_KEY = "ID_KEY"
     }
 }

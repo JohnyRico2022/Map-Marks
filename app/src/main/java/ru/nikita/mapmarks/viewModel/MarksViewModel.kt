@@ -29,9 +29,11 @@ class MarksViewModel(context: Application) : AndroidViewModel(context) {
         }
     }
 
-    fun editById() {
-        //       repository.editMarks()
+    fun editById(id: Long, title: String) {
 
+        viewModelScope.launch {
+            dao.changeTitleById(id, title)
+        }
     }
 
 }

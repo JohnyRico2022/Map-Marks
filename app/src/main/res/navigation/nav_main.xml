@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_pointsFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_pointsFragment_to_editPointFragment"
+            app:destination="@id/editPointFragment" />
     </fragment>
     <fragment
         android:id="@+id/editPointFragment"

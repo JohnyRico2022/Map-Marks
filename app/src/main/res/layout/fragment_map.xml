@@ -3,8 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.MapFragment">
 
+    <TextView
+        android:id="@+id/map_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:layout_gravity="center"
+        android:layout_marginBottom="200dp"/>
 
     <TextView
         android:id="@+id/map_lat"
@@ -38,7 +46,7 @@
         android:layout_marginEnd="12dp"
         android:clickable="true"
         android:focusable="true"
-        android:backgroundTint="@color/grey"
+        android:backgroundTint="@color/white"
         android:src="@drawable/ic_list_24_white"/>
 
 </FrameLayout>
