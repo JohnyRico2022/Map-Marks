@@ -1,13 +1,8 @@
 package ru.nikita.mapmarks.ui
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Canvas
+
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.yandex.mapkit.MapKitFactory
 import ru.nikita.mapmarks.databinding.ActivityMainBinding
 

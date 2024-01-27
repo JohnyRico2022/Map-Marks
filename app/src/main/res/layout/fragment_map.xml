@@ -3,39 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.MapFragment">
 
-    <TextView
-        android:id="@+id/map_title"
+    <com.yandex.mapkit.mapview.MapView
+        android:id="@+id/mapview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Title"
-        android:layout_gravity="center"
-        android:layout_marginBottom="200dp"/>
-
-    <TextView
-        android:id="@+id/map_lat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Lat"
-        android:layout_gravity="center"
-        android:layout_marginBottom="100dp"/>
-
-    <TextView
-        android:id="@+id/map_long"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Long"
-        android:layout_gravity="center"
-        android:layout_marginBottom="50dp"/>
-
-    <Button
-        android:id="@+id/random_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="random"/>
+        android:layout_height="match_parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/goToPointsFragment"

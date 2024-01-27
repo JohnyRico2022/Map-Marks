@@ -82,5 +82,3 @@ class PointsFragment : Fragment() {
         return binding.root
     }
 }
-
-//TODO редактирование заголовка метки
