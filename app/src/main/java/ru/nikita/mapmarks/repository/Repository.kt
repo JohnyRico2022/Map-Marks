@@ -1,3 +1,4 @@
+/*
 package ru.nikita.mapmarks.repository
 
 import androidx.lifecycle.LiveData
@@ -25,9 +26,11 @@ class Repository(
         list.map { it.toDto() }
 
 
-        /*list.map {
+        */
+/*list.map {
             Marks(it.id, it.title, it.latitude, it.longitude)
-        }*/
+        }*//*
+
 
     }
 
@@ -40,4 +43,4 @@ class Repository(
 
     override fun save(marks: Marks) = dao.insert(MarksEntity.fromDto(marks))
 
-}
+}*/

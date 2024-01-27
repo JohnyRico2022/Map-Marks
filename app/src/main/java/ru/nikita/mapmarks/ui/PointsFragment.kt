@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import ru.nikita.mapmarks.R
 import ru.nikita.mapmarks.adapter.MarksAdapter
 import ru.nikita.mapmarks.adapter.OnInteractionListener
@@ -21,7 +24,7 @@ class PointsFragment : Fragment() {
     lateinit var binding: FragmentPointsBinding
 
 
-    override fun onCreateView(
+    override  fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
@@ -40,15 +43,24 @@ class PointsFragment : Fragment() {
             }
         })
 
-        binding.recyclerView.adapter = adapter
-        viewModel.data.observe(viewLifecycleOwner) { marks ->
+        viewLifecycleOwner.lifecycle.coroutineScope.launch{
+            binding.recyclerView.adapter = adapter
+
+
+            viewModel.places.collectLatest {plases ->
+                adapter.submitList(plases)
+            }
+        }
+
+
+        /*viewModel.data.observe(viewLifecycleOwner) { marks ->
             val newMarks = marks.size > adapter.currentList.size
             adapter.submitList(marks){
                 if(newMarks){
                     binding.recyclerView.smoothScrollToPosition(0)
                 }
             }
-        }
+        }*/
 
 
         binding.backButton.setOnClickListener {

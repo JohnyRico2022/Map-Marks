@@ -2,36 +2,35 @@ package ru.nikita.mapmarks.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import ru.nikita.mapmarks.db.AppDb
 import ru.nikita.mapmarks.dto.Marks
-import ru.nikita.mapmarks.repository.Repository
+import ru.nikita.mapmarks.entity.MarksEntity
 
-class MarksViewModel(application: Application) : AndroidViewModel(application) {
+class MarksViewModel(context: Application) : AndroidViewModel(context) {
 
-    private val empty = Marks(
-        id = 0,
-        title = "",
-        latitude = 0.0,
-        longitude = 0.0,
-    )
+    private val dao = AppDb.getInstance(context).marksDao()
 
-    private val repository: Repository = Repository(AppDb.getInstance(application).marksDao())
-    val data = repository.allMarks()
-    val edited = MutableLiveData(empty)
-
-    fun save(marks: Marks) {
-      repository.save(marks)
+    val places = dao.getAll().map {
+        it.map(MarksEntity::toDto)
     }
 
+    fun save(marks: Marks) {
+        viewModelScope.launch {
+            dao.insert(MarksEntity.fromDto(marks))
+        }
+    }
 
-    fun removeById(id: Int) = repository.removeMarksById(id)
-
+    fun removeById(id: Long) {
+        viewModelScope.launch {
+            dao.removeById(id)
+        }
+    }
 
     fun editById() {
- //       repository.editMarks()
+        //       repository.editMarks()
 
     }
 

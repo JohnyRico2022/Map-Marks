@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         MapKitFactory.initialize(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
- //       requestLocationPermission()
     }
 
     private fun setApiKey(savedInstanceState: Bundle?) {
@@ -28,28 +27,6 @@ class MainActivity : AppCompatActivity() {
             MapKitFactory.setApiKey(MAPKIT_API_KEY)
         }
     }
-
-   /* private fun requestLocationPermission() {    //разрешение на определение местоположения
-        if (
-            (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED) ||
-            (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED)
-        )
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ),
-                0
-            )
-        return
-    }*/
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
