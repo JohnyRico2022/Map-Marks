@@ -30,9 +30,8 @@ class MarksViewModel(context: Application) : AndroidViewModel(context) {
     }
 
     fun editById(id: Long, title: String) {
-
         viewModelScope.launch {
-            dao.changeTitleById(id, title)
+            dao.updateMarks(id, title)
         }
     }
 

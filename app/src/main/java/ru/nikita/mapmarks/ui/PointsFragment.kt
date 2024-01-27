@@ -44,7 +44,7 @@ class PointsFragment : Fragment() {
                         putString(LAT_KEY, marks.latitude.toString())
                         putString(LONG_KEY, marks.longitude.toString())
                         putString(TITLE_KEY, marks.title)
-   //                     putString(ID_KEY, marks.id.toString())
+                        putString(ID_KEY, marks.id.toString())
                     })
                 Toast.makeText(context, "Редактирование id: ${marks.id}", Toast.LENGTH_SHORT).show()
             }

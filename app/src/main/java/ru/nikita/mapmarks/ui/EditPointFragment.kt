@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import ru.nikita.mapmarks.R
@@ -20,7 +19,6 @@ import ru.nikita.mapmarks.viewModel.MarksViewModel
 class EditPointFragment : Fragment() {
     private lateinit var binding: FragmentEditPointBinding
     private var nextId = 0L
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,6 +30,7 @@ class EditPointFragment : Fragment() {
         val lat = arguments?.getString(LAT_KEY)
         val long = arguments?.getString(LONG_KEY)
         val title = arguments?.getString(TITLE_KEY)
+        val currentId = arguments?.getString(ID_KEY)
 
 
         // вписывание данных в TextView
@@ -39,36 +38,32 @@ class EditPointFragment : Fragment() {
         binding.longitudeValue.text = long
         binding.titleEditText.setText(title)
 
-
-        // получение данных с TextView
-        val setNewPointTitle = binding.titleEditText.text.toString()
-        val setNewPointLat = (binding.latitudeValue.text as String?)!!.toDouble()
-        val setNewPointLong = (binding.longitudeValue.text as String?)!!.toDouble()
-
-
-
         binding.saveButton.setOnClickListener {
+            // получение данных с TextView
+            val setNewPointTitle = binding.titleEditText.text.toString()
+            val setNewPointLat = (binding.latitudeValue.text as String?)!!.toDouble()
+            val setNewPointLong = (binding.longitudeValue.text as String?)!!.toDouble()
+            val newId = currentId!!.toLong()
 
-            viewModel.save(
-                Marks(
-                    id = nextId++,
-                    title = setNewPointTitle,
-                    latitude = setNewPointLat,
-                    longitude = setNewPointLong
+            if (newId == 0L) {
+                viewModel.save(
+                    Marks(
+                        id = nextId++,
+                        title = setNewPointTitle,
+                        latitude = setNewPointLat,
+                        longitude = setNewPointLong
+                    ))
+            } else {
+                viewModel.editById(
+                    currentId.toLong(),
+                    title = setNewPointTitle
                 )
-            )
-            // возвращаемся на карту
+            }
+
             findNavController().navigate(R.id.action_editPointFragment_to_mapFragment)
-
-        }
-
-
-
-
-
-
+            }
 
         return binding.root
+        }
     }
 
-}

@@ -88,6 +88,7 @@ class MapFragment : Fragment(R.layout.fragment_map) {
                 val longRandom = Random.nextDouble(60.000, 65.999)
                 mapLat.text = latRandom.toString()
                 mapLong.text = longRandom.toString()
+                val idFromMap = 0
 
                 Toast.makeText(
                     requireContext(),
@@ -100,6 +101,7 @@ class MapFragment : Fragment(R.layout.fragment_map) {
                     Bundle().apply {
                         putString(LAT_KEY, latRandom.toString())
                         putString(LONG_KEY, longRandom.toString())
+                        putString(ID_KEY, idFromMap.toString())
                     })
             }
         }
