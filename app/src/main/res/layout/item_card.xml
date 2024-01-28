@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Нулевая верста"
+            tools:text="Нулевая верста"
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +43,7 @@
                 android:layout_marginTop="8dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:text="Latitude:"
+                android:text="@string/latitude"
                 android:textSize="20sp"
                 android:textStyle="italic|bold" />
 
@@ -55,9 +55,9 @@
                 android:layout_weight="1"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="55.753188"
                 android:textSize="20sp"
-                android:textStyle="normal" />
+                android:textStyle="normal"
+                tools:text="55.753188" />
 
             <ImageButton
                 android:id="@+id/delete_button"
@@ -85,7 +85,7 @@
                 android:layout_marginTop="8dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:text="Longitude:"
+                android:text="@string/longitude"
                 android:textSize="20sp"
                 android:textStyle="italic|bold" />
 
@@ -97,7 +97,7 @@
                 android:layout_weight="1"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="36.799188"
+                tools:text="36.799188"
                 android:textSize="20sp"
                 android:textStyle="normal" />
 

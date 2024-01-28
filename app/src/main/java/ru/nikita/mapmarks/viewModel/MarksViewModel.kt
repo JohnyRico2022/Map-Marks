@@ -34,5 +34,4 @@ class MarksViewModel(context: Application) : AndroidViewModel(context) {
             dao.updateMarks(id, title)
         }
     }
-
 }

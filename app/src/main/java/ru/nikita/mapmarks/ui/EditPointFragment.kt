@@ -52,7 +52,8 @@ class EditPointFragment : Fragment() {
                         title = setNewPointTitle,
                         latitude = setNewPointLat,
                         longitude = setNewPointLong
-                    ))
+                    )
+                )
             } else {
                 viewModel.editById(
                     currentId.toLong(),
@@ -61,9 +62,10 @@ class EditPointFragment : Fragment() {
             }
 
             findNavController().navigate(R.id.action_editPointFragment_to_mapFragment)
-            }
+
+        }
 
         return binding.root
-        }
     }
+}
 

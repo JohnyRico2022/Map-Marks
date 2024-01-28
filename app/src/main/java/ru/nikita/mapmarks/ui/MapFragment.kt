@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
@@ -22,6 +23,8 @@ import com.yandex.mapkit.map.Map
 import com.yandex.mapkit.map.MapObjectCollection
 import com.yandex.mapkit.map.PlacemarkMapObject
 import com.yandex.runtime.image.ImageProvider
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import ru.nikita.mapmarks.R
 import ru.nikita.mapmarks.databinding.FragmentMapBinding
 import ru.nikita.mapmarks.viewModel.MarksViewModel
@@ -29,11 +32,10 @@ import ru.nikita.mapmarks.viewModel.MarksViewModel
 
 class MapFragment : Fragment(), CameraListener {
     lateinit var binding: FragmentMapBinding
-    val viewModel: MarksViewModel by viewModels()
-    private val startLocation = Point(55.753188, 37.622428)    // стартовая точка
-    private var zoomValue = 10.0F                                          // величина приближения
+    private val viewModel: MarksViewModel by viewModels()
+    private var zoomValue = 8.0F
     private lateinit var mapObjectCollection: MapObjectCollection
-    private lateinit var placemarkMapObject: PlacemarkMapObject
+    private lateinit var placeMarkMapObject: PlacemarkMapObject
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,91 +47,67 @@ class MapFragment : Fragment(), CameraListener {
         val marker = createBitmapFromVector(R.drawable.ic_pin_black_svg)        // метка
         val imageProvider = ImageProvider.fromBitmap(marker)
         mapObjectCollection = binding.mapview.mapWindow.map.mapObjects
-        placemarkMapObject = mapObjectCollection.addPlacemark()
+        placeMarkMapObject = mapObjectCollection.addPlacemark()
 
-        //Начальное движенее камеры
-        binding.mapview.mapWindow.map.move(
-            CameraPosition(startLocation, zoomValue, 0.0F, 100.0F),
-            Animation(Animation.Type.SMOOTH, 2F),
-            null
-        )
 
         val inputListener = object : InputListener {
+
             override fun onMapTap(map: Map, pin: Point) {
                 Toast.makeText(requireContext(), "Tap", Toast.LENGTH_SHORT).show()
             }
 
             override fun onMapLongTap(map: Map, point: Point) {
-                placemarkMapObject.geometry = point
-                Toast.makeText(
-                    requireContext(),
-                    "long Tap :   ${point.latitude} + ${point.longitude}",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                val lat = point.latitude
-                val long = point.longitude
-
+                placeMarkMapObject.geometry = point
+                val idMark = 0L
 
                 findNavController().navigate(
                     R.id.action_mapFragment_to_editPointFragment,
                     Bundle().apply {
-                        putString(LAT_KEY, lat.toString())
-                        putString(LONG_KEY, long.toString())
+                        putString(LAT_KEY, point.latitude.toString())
+                        putString(LONG_KEY, point.longitude.toString())
+                        putString(ID_KEY, idMark.toString())
                     })
             }
         }
 
         map.addInputListener(inputListener)
 
+        val pinsCollection = map.mapObjects.addCollection()
+        viewLifecycleOwner.lifecycle.coroutineScope.launch {
+            viewModel.places.collectLatest { places ->
+                pinsCollection.clear()
+                places.forEach { point ->
+                    pinsCollection.addPlacemark().apply {
+                        geometry = Point(point.latitude, point.longitude)
+                        setIcon(imageProvider)
+                        setText(point.title)
+                    }
+                }
+
+            }
+        }
+
         binding.goToPointsFragment.setOnClickListener {
             findNavController().navigate(R.id.pointsFragment)
         }
 
+        cameraMove()
+
         return binding.root
     }
 
-    /* override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-         super.onViewCreated(view, savedInstanceState)
-         binding.apply {
-             randomButton.setOnClickListener {
-                 val latRandom = Random.nextDouble(30.000, 35.999)
-                 val longRandom = Random.nextDouble(60.000, 65.999)
-                 mapLat.text = latRandom.toString()
-                 mapLong.text = longRandom.toString()
-                 val idFromMap = 0
 
-                 Toast.makeText(
-                     requireContext(),
-                     "long Tap :   $latRandom + $longRandom",
-                     Toast.LENGTH_LONG
-                 ).show()
+    private fun cameraMove() {
 
-                 findNavController().navigate(
-                     R.id.action_mapFragment_to_editPointFragment,
-                     Bundle().apply {
-                         putString(LAT_KEY, latRandom.toString())
-                         putString(LONG_KEY, longRandom.toString())
-                         putString(ID_KEY, idFromMap.toString())
-                     })
-             }
-         }
+        val latFromBD = arguments?.getString(LAT_KEY)?.toDouble() ?: 55.753188
+        val longFromBD = arguments?.getString(LONG_KEY)?.toDouble() ?: 37.622428
 
-
-         // получение данных с DB
-         val latFromDB = arguments?.getString(LAT_KEY)
-         val longFromDB = arguments?.getString(LONG_KEY)
-         val titleFromDB = arguments?.getString(TITLE_KEY)
-
-         // вписывание данных в TextView
-         binding.mapLat.text = latFromDB
-         binding.mapLong.text = longFromDB
-         binding.mapTitle.text = titleFromDB
-
-         binding.goToPointsFragment.setOnClickListener {
-             findNavController().navigate(R.id.pointsFragment)
-         }
-     }*/
+        binding.mapview.mapWindow.map.move(
+            CameraPosition(Point(latFromBD, longFromBD), zoomValue, 0.0F, 100.0F),
+            Animation(Animation.Type.SMOOTH, 1F),
+            null
+        )
+    }
 
     private fun createBitmapFromVector(art: Int): Bitmap? {
         val drawable = ContextCompat.getDrawable(requireContext(), art) ?: return null
@@ -151,10 +129,11 @@ class MapFragment : Fragment(), CameraListener {
     }
 
     override fun onStop() {
+        super.onStop()
         binding.mapview.onStop()
         MapKitFactory.getInstance().onStop()
-        super.onStop()
     }
+
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)

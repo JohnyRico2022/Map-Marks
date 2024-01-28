@@ -22,5 +22,4 @@ interface MarksDao {
 
     @Query("DELETE FROM MarksEntity WHERE id = :id")
     suspend fun removeById(id: Long)
-
 }

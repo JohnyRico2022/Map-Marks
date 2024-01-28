@@ -11,7 +11,6 @@ import ru.nikita.mapmarks.dto.Marks
 interface OnInteractionListener {
     fun onEdit(marks: Marks) {}
     fun onRemove(marks: Marks) {}
-
     fun onItemClicked(marks: Marks) {}
 }
 

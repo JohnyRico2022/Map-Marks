@@ -27,7 +27,6 @@ class PointsFragment : Fragment() {
 
     lateinit var binding: FragmentPointsBinding
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,12 +45,12 @@ class PointsFragment : Fragment() {
                         putString(TITLE_KEY, marks.title)
                         putString(ID_KEY, marks.id.toString())
                     })
-                Toast.makeText(context, "Редактирование id: ${marks.id}", Toast.LENGTH_SHORT).show()
             }
 
             override fun onRemove(marks: Marks) {
                 viewModel.removeById(marks.id)
-                Toast.makeText(context, "Удаление id: ${marks.id}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Вы удалили метку: ${marks.title}", Toast.LENGTH_SHORT)
+                    .show()
             }
 
             override fun onItemClicked(marks: Marks) {
@@ -61,15 +60,12 @@ class PointsFragment : Fragment() {
                         putString(LAT_KEY, marks.latitude.toString())
                         putString(LONG_KEY, marks.longitude.toString())
                         putString(TITLE_KEY, marks.title)
-                    }
-                )
-                Toast.makeText(context, "Item with id: ${marks.id}", Toast.LENGTH_LONG).show()
+                    })
             }
         })
 
         viewLifecycleOwner.lifecycle.coroutineScope.launch {
             binding.recyclerView.adapter = adapter
-
 
             viewModel.places.collectLatest { plases ->
                 adapter.submitList(plases)
