@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">MapMarks</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="back">back</string>
+    <string name="back">Назад к карте</string>
+    <string name="save">Сохранить</string>
+    <string name="marks">Метка на карте</string>
+    <string name="hint">Например: Нулевая верста</string>
+    <string name="latitude">Latitude:</string>
+    <string name="longitude">Longitude:</string>
 </resources>

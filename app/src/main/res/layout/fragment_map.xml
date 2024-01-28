@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.MapFragment">
 
-
     <com.yandex.mapkit.mapview.MapView
         android:id="@+id/mapview"
         android:layout_width="match_parent"
@@ -20,7 +19,7 @@
         android:layout_marginEnd="12dp"
         android:clickable="true"
         android:focusable="true"
-        android:backgroundTint="@color/grey"
+        android:backgroundTint="@color/white"
         android:src="@drawable/ic_list_24_white"/>
 
 </FrameLayout>

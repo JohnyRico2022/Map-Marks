@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="Метка на карте"
+        android:text="@string/marks"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +37,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
         android:background="@null"
-        android:hint="Например: Нулевая верста"
+        android:hint="@string/hint"
         android:inputType="text"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="24dp"
-        android:text="Latitude:"
+        android:text="@string/latitude"
         android:textSize="20sp"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,36 +62,31 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="24dp"
-        android:text="Longitude:"
+        android:text="@string/longitude"
         android:textSize="20sp"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/latitude" />
 
-    <EditText
-        android:id="@+id/latitude_editText"
+    <TextView
+        android:id="@+id/latitude_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:background="@null"
-        android:hint="55.753188"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/latitude"
         app:layout_constraintTop_toBottomOf="@id/title_editText" />
 
-    <EditText
-        android:id="@+id/longitude_editText"
+    <TextView
+        android:id="@+id/longitude_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:background="@null"
-        android:hint="33.759988"
-        android:inputType="numberDecimal"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/latitude"
-        app:layout_constraintTop_toBottomOf="@id/latitude_editText" />
+        app:layout_constraintTop_toBottomOf="@id/latitude_value" />
 
     <View
         android:id="@+id/bottom_line"
@@ -101,14 +96,14 @@
         android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/longitude_editText" />
+        app:layout_constraintTop_toBottomOf="@id/longitude_value" />
 
     <Button
         android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:text="Save"
+        android:text="@string/save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
