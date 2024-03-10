@@ -61,7 +61,7 @@ class EditPointFragment : Fragment() {
                 )
             }
 
-            findNavController().navigate(R.id.action_editPointFragment_to_mapFragment)
+            findNavController().popBackStack(R.id.mapFragment, false)
 
         }
 

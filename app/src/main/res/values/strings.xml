@@ -6,4 +6,7 @@
     <string name="hint">Например: Нулевая верста</string>
     <string name="latitude">Latitude:</string>
     <string name="longitude">Longitude:</string>
+    <string name="tap_on_map">Для постановки метки необходимо долгое нажатие</string>
+    <string name="studio">Konstantinov AppDeveloper</string>
+    <string name="from">from</string>
 </resources>
