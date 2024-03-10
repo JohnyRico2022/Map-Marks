@@ -73,7 +73,7 @@ class PointsFragment : Fragment() {
         }
 
         binding.backButton.setOnClickListener {
-            findNavController().navigate(R.id.mapFragment)
+            findNavController().popBackStack(R.id.mapFragment, false)
         }
         return binding.root
     }

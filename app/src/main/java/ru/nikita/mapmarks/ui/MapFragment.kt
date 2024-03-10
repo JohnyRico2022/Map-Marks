@@ -53,7 +53,7 @@ class MapFragment : Fragment(), CameraListener {
         val inputListener = object : InputListener {
 
             override fun onMapTap(map: Map, pin: Point) {
-                Toast.makeText(requireContext(), "Tap", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.tap_on_map, Toast.LENGTH_SHORT).show()
             }
 
             override fun onMapLongTap(map: Map, point: Point) {

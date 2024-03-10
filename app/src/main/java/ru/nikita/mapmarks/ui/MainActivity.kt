@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val MAPKIT_API_KEY = "c439084a-3fdb-4fe3-903f-e0d2ee642d43"
+        const val MAPKIT_API_KEY = "Your api key"
     }
 
 }
